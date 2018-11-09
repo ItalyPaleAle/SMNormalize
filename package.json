@@ -7,8 +7,12 @@
   "directories": {
     "test": "test"
   },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "scripts": {
-    "compile": "npm run tsc",
+    "build": "node build-unicode-data.js && npm run tsc",
+    "compile": "npm run build",
     "docs": "npm run typedoc",
     "tsc": "./node_modules/.bin/tsc",
     "test": "TZ=Etc/UTC ./node_modules/.bin/ts-node node_modules/istanbul/lib/cli.js cover -e .ts  -x \"*.d.ts\" -x \"*.test.ts\" ./node_modules/.bin/_mocha --report html -- -R test test/**/*.test.ts",
@@ -49,7 +53,7 @@
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",
     "typedoc": "^0.13.0",
-    "typescript": "^3.1.0",
+    "typescript": "^3.1.6",
     "unicode-11.0.0": "^0.7.8",
     "unicode-tr51": "^9.0.1"
   }
