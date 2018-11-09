@@ -333,4 +333,79 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '😁')
         assert.equal(Normalize('😁', options), '😁')
     })
+
+    it('Normalize: lowercase, basic mode', () => {
+        const options = {
+            mode: 'basic',
+            lowercase: true
+        } as NormalizeOptions
+
+        assert.equal(Normalize('ABC', options), 'abc')
+        assert.equal(Normalize('èe', options), 'ee')
+        assert.equal(Normalize('€', options), '€')
+        assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
+        assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.*')
+        assert.equal(Normalize('àòùìéëü_-.*\xA0', options), 'aouieeu_-.* ') // Non-breaking space
+        assert.equal(Normalize('Алушта', options), 'алушта')
+        assert.equal(Normalize('Алушта=/\\"', options), 'алушта=/\\"')
+        assert.equal(Normalize('把百', options), '把百')
+        assert.equal(Normalize('\uD804\uDC19', options), '\uD804\uDC19') // SMP
+        assert.equal(Normalize('\uD83D\uDE01', options), '\uD83D\uDE01') // Emoji
+        assert.equal(Normalize('\uD83D\uDE01', options), '😁')
+        assert.equal(Normalize('😁', options), '😁')
+    })
+
+    it('Normalize: lowercase, alphabetic mode', () => {
+        const options = {
+            mode: 'alphabetic',
+            lowercase: true
+        } as NormalizeOptions
+
+        assert.equal(Normalize('ABC', options), 'abc')
+        assert.equal(Normalize('èe', options), 'ee')
+        assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
+        assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.') // _-. are preserved by default
+        assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-. ') // _-. are preserved by default
+        assert.equal(Normalize('àòùìéëü_-.*\xA0', options), 'aouieeu_-. ') // Non-breaking space converted to normal space
+        assert.equal(Normalize('Алушта', options), 'алушта')
+        assert.equal(Normalize('Алушта=/\\"', options), 'алушта')
+        assert.equal(Normalize('把百', options), '把百')
+        assert.equal(Normalize('\uD804\uDC19', options), '\uD804\uDC19') // SMP
+        assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
+        assert.equal(Normalize('\uD83D\uDE01', options), '')
+        assert.equal(Normalize('😁', options), '')
+    })
+
+    it('Normalize: lowercase, latin mode', () => {
+        const options = {
+            mode: 'latin',
+            lowercase: true
+        } as NormalizeOptions
+
+        assert.equal(Normalize('ABC', options), 'abc')
+        assert.equal(Normalize('èe', options), 'ee')
+        assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
+        assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.') // _-. are preserved by default
+        assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-. ') // _-. are preserved by default
+        assert.equal(Normalize('àòùìéëü_-.*\xA0', options), 'aouieeu_-. ') // Non-breaking space converted to normal space
+        assert.equal(Normalize('1230', options), '1230') // Numbers
+        assert.equal(Normalize('\u0661', options), '') // Arabic-indic digit 1 - removed
+        assert.equal(Normalize('\u1B54', options), '') // Balinese digit 4 - removed
+        assert.equal(Normalize('Алушта', options), '')
+        assert.equal(Normalize('Алушта=/\\"', options), '')
+        assert.equal(Normalize('把百', options), '')
+        assert.equal(Normalize('\uD804\uDC19', options), '') // SMP
+        assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
+        assert.equal(Normalize('\uD83D\uDE01', options), '')
+        assert.equal(Normalize('😁', options), '')
+    })
+
+    it('Normalize: errors', () => {
+        assert.throws(() => {
+            // @ts-ignore
+            Normalize('Hello world', {mode: 'invalid'})
+        }, Error('Invalid mode'))
+    })
 })
