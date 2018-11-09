@@ -21,6 +21,9 @@ const sets = {
     // Numbers
     numbers: require('unicode-' + unicodePackageVersion + '/General_Category/Number/code-points.js'),
 
+    // Control characters
+    control: require('unicode-' + unicodePackageVersion + '/General_Category/Control/code-points.js'),
+
     // Emoji (from the unicode-tr51 package)
     emoji: require('unicode-tr51/Emoji.js')
 }
@@ -31,7 +34,7 @@ const negateClass = (str) => '[^' + str.substr(1)
 // Build the regular expressions we need
 const regExs = {
     // Basic mode: just removes marks (blacklisting characters)
-    'basic': regenerate(sets.marks)
+    'basic': regenerate(sets.marks, sets.control)
         .toString({hasUnicodeFlag: true}),
 
     // Spacing characters: will replace spacing characters with spaces (blacklisting characters)

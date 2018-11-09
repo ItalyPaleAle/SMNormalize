@@ -9,6 +9,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC'), 'ABC')
         assert.equal(Normalize('èe'), 'ee')
         assert.equal(Normalize('€'), '€')
+        assert.equal(Normalize('\x1B'), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü'), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*'), 'aouieeu_-.*')
         assert.equal(Normalize('àòùìéëü_-.*\xA0'), 'aouieeu_-.* ') // Non-breaking space
@@ -19,6 +20,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01'), '\uD83D\uDE01') // Emoji
         assert.equal(Normalize('\uD83D\uDE01'), '😁')
         assert.equal(Normalize('😁'), '😁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁'), 'Hello Шѻrld_!1߁')
     })
 
     it('Normalize: basic mode', () => {
@@ -29,16 +31,19 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '€')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.*')
         assert.equal(Normalize('àòùìéëü_-.*\xA0', options), 'aouieeu_-.* ') // Non-breaking space
         assert.equal(Normalize('Алушта', options), 'Алушта')
         assert.equal(Normalize('Алушта=/\\"', options), 'Алушта=/\\"')
+        assert.equal(Normalize('Алушта=/\\"\t', options), 'Алушта=/\\"') // Tab
         assert.equal(Normalize('把百', options), '把百')
         assert.equal(Normalize('\uD804\uDC19', options), '\uD804\uDC19') // SMP
         assert.equal(Normalize('\uD83D\uDE01', options), '\uD83D\uDE01') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '😁')
         assert.equal(Normalize('😁', options), '😁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello Шѻrld_!1߁')
     })
 
     it('Normalize: alphabetic mode', () => {
@@ -49,6 +54,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.') // _-. are preserved by default
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-. ') // _-. are preserved by default
@@ -60,6 +66,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello Шѻrld_1߁')
     })
 
     it('Normalize: alphabetic mode, no preserveCharacters', () => {
@@ -71,6 +78,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu ') // spaces are preserved anyways
@@ -85,6 +93,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello Шѻrld1߁')
     })
 
     it('Normalize: alphabetic mode, custom preserveCharacters', () => {
@@ -96,6 +105,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu*')
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu* ') // spaces are preserved anyways
@@ -108,6 +118,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello Шѻrld1߁')
     })
 
     it('Normalize: alphabetic mode, keep emojis', () => {
@@ -119,11 +130,12 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.*') // _-. are preserved by default. * is part of the emoji set
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-.* ') // _-. are preserved by default. * is part of the emoji set
         assert.equal(Normalize('àòùìéëü_-.*#\xA0', options), 'aouieeu_-.*# ') // Non-breaking space converted to normal space. * and # are part of the emoji set
-        assert.equal(Normalize('1230', options), '1230') // Roman numerals are part of the emoji set
+        assert.equal(Normalize('1230', options), '1230') // Latin numerals are part of the emoji set
         assert.equal(Normalize('\u1B54', options), '\u1B54') // Balinese digit
         assert.equal(Normalize('Алушта', options), 'Алушта')
         assert.equal(Normalize('Алушта=/\\"', options), 'Алушта')
@@ -132,6 +144,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '\uD83D\uDE01') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '😁')
         assert.equal(Normalize('😁', options), '😁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello Шѻrld_1߁')
     })
 
     it('Normalize: alphabetic mode, remove numbers', () => {
@@ -143,6 +156,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.') // _-. are preserved by default
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-. ') // _-. are preserved by default
@@ -157,6 +171,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello Шѻrld_')
     })
 
     it('Normalize: alphabetic mode, remove numbers, keep emojis', () => {
@@ -169,11 +184,12 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.*') // _-. are preserved by default. * is part of the emoji set
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-.* ') // _-. are preserved by default. * is part of the emoji set
         assert.equal(Normalize('àòùìéëü_-.*#\xA0', options), 'aouieeu_-.*# ') // Non-breaking space converted to normal space. * and # are part of the emoji set
-        assert.equal(Normalize('1230', options), '1230') // Roman numerals are part of the emoji set, so are kept regardless
+        assert.equal(Normalize('1230', options), '1230') // Latin numerals are part of the emoji set, so are kept regardless
         assert.equal(Normalize('\u0661', options), '') // Arabic-indic digit 1
         assert.equal(Normalize('\u1B54', options), '') // Balinese digit
         assert.equal(Normalize('Алушта', options), 'Алушта')
@@ -183,6 +199,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '\uD83D\uDE01') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '😁')
         assert.equal(Normalize('😁', options), '😁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello Шѻrld_1') // 1 remain because it's a valid emoji
     })
 
     it('Normalize: latin mode', () => {
@@ -193,6 +210,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.') // _-. are preserved by default
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-. ') // _-. are preserved by default
@@ -207,6 +225,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello rld_1')
     })
 
     it('Normalize: latin mode, no preserveCharacters', () => {
@@ -218,6 +237,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu ') // spaces are preserved anyways
@@ -232,6 +252,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello rld1')
     })
 
     it('Normalize: latin mode, custom preserveCharacters', () => {
@@ -243,6 +264,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu*')
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu* ') // spaces are preserved anyways
@@ -256,6 +278,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello rld1')
     })
 
     it('Normalize: latin mode, keep emojis', () => {
@@ -267,11 +290,12 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.*') // _-. are preserved by default. * is part of the emoji set
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-.* ') // _-. are preserved by default. * is part of the emoji set
         assert.equal(Normalize('àòùìéëü_-.*#\xA0', options), 'aouieeu_-.*# ') // Non-breaking space converted to normal space. * and # are part of the emoji set
-        assert.equal(Normalize('1230', options), '1230') // Roman numerals are part of the emoji set
+        assert.equal(Normalize('1230', options), '1230') // Latin numerals are part of the emoji set
         assert.equal(Normalize('\u0661', options), '') // Arabic-indic digit 1 - removed
         assert.equal(Normalize('\u1B54', options), '') // Balinese digit 4 - removed
         assert.equal(Normalize('Алушта', options), '')
@@ -281,6 +305,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '\uD83D\uDE01') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '😁')
         assert.equal(Normalize('😁', options), '😁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello rld_1')
     })
 
     it('Normalize: latin mode, remove numbers', () => {
@@ -292,6 +317,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.') // _-. are preserved by default
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-. ') // _-. are preserved by default
@@ -306,6 +332,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello rld_')
     })
 
     it('Normalize: latin mode, remove numbers, keep emojis', () => {
@@ -318,11 +345,12 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'ABC')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.*') // _-. are preserved by default. * is part of the emoji set
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-.* ') // _-. are preserved by default. * is part of the emoji set
         assert.equal(Normalize('àòùìéëü_-.*#\xA0', options), 'aouieeu_-.*# ') // Non-breaking space converted to normal space. * and # are part of the emoji set
-        assert.equal(Normalize('1230', options), '1230') // Roman numerals are part of the emoji set, so are kept regardless
+        assert.equal(Normalize('1230', options), '1230') // Latin numerals are part of the emoji set, so are kept regardless
         assert.equal(Normalize('\u0661', options), '') // Arabic-indic digit 1
         assert.equal(Normalize('\u1B54', options), '') // Balinese digit
         assert.equal(Normalize('Алушта', options), '')
@@ -332,6 +360,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '\uD83D\uDE01') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '😁')
         assert.equal(Normalize('😁', options), '😁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello rld_1') // 1 remain because it's a valid emoji
     })
 
     it('Normalize: lowercase, basic mode', () => {
@@ -343,6 +372,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'abc')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '€')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.*')
         assert.equal(Normalize('àòùìéëü_-.*\xA0', options), 'aouieeu_-.* ') // Non-breaking space
@@ -353,6 +383,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '\uD83D\uDE01') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '😁')
         assert.equal(Normalize('😁', options), '😁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'hello шѻrld_!1߁')
     })
 
     it('Normalize: lowercase, alphabetic mode', () => {
@@ -364,6 +395,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'abc')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.') // _-. are preserved by default
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-. ') // _-. are preserved by default
@@ -375,6 +407,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'hello шѻrld_1߁')
     })
 
     it('Normalize: lowercase, latin mode', () => {
@@ -386,6 +419,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('ABC', options), 'abc')
         assert.equal(Normalize('èe', options), 'ee')
         assert.equal(Normalize('€', options), '')
+        assert.equal(Normalize('\x1B', options), '') // Control character (escape)
         assert.equal(Normalize('àòùìéëü', options), 'aouieeu')
         assert.equal(Normalize('àòùìéëü_-.*', options), 'aouieeu_-.') // _-. are preserved by default
         assert.equal(Normalize('àòùìéëü_-.* ', options), 'aouieeu_-. ') // _-. are preserved by default
@@ -400,6 +434,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '') // Emoji
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
+        assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'hello rld_1')
     })
 
     it('Normalize: errors', () => {
