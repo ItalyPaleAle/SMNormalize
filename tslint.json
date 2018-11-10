@@ -3,6 +3,9 @@
     "extends": [
         "tslint:recommended"
     ],
+    "linterOptions": {
+        "exclude": "src/data/*"
+    },
     "jsRules": {},
     "rules": {
         "indent": [true, "spaces", 4],

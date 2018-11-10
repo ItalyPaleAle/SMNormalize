@@ -26,7 +26,8 @@ export interface NormalizeOptions {
     preserveCharacters?: string
 
     /**
-     * Remove numbers. Default value: `false`. This has no effect in `basic` mode, as that never removes numbers. */
+     * Remove numbers. Default value: `false`. This has no effect in `basic` mode, as that never removes numbers. 
+     */
     removeNumbers?: boolean
 
     /**
@@ -72,11 +73,11 @@ export function Normalize(str: string, options?: NormalizeOptions): string {
     let key
 
     // Replacer function that converts spaces to the "convertSpace" character, and preserves those characters in the "preserveCharacter" list
-    const replacer = (str: string): string =>
-        str === ' ' ?
+    const replacer = (val: string): string =>
+        val === ' ' ?
             options.convertSpaces :
-            options.preserveCharacters.indexOf(str) < 0 ? '' : str
-    
+            options.preserveCharacters.indexOf(val) < 0 ? '' : val
+
     switch (options.mode) {
         case 'basic':
             // Remove all sequences that are in the "mark" category
@@ -115,4 +116,5 @@ export function Normalize(str: string, options?: NormalizeOptions): string {
     return str
 }
 
+// tslint:disable-next-line
 module.exports = {Normalize}
