@@ -21,6 +21,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01'), '😁')
         assert.equal(Normalize('😁'), '😁')
         assert.equal(Normalize('Hello Шѻrld_!1߁'), 'Hello-Шѻrld_!1߁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁🤗'), 'Hello-Шѻrld_!1߁🤗')
     })
 
     it('Normalize: basic mode', () => {
@@ -68,6 +69,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
         assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello-Шѻrld_1߁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁🤗', options), 'Hello-Шѻrld_1߁')
     })
 
     it('Normalize: alphabetic mode, no preserveCharacters', () => {
@@ -95,6 +97,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
         assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello-Шѻrld1߁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁🤗', options), 'Hello-Шѻrld1߁')
     })
 
     it('Normalize: alphabetic mode, custom preserveCharacters', () => {
@@ -120,6 +123,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
         assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello-Шѻrld1߁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁🤗', options), 'Hello-Шѻrld1߁')
     })
 
     it('Normalize: alphabetic mode, keep emojis', () => {
@@ -146,6 +150,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '😁')
         assert.equal(Normalize('😁', options), '😁')
         assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello-Шѻrld_1߁')
+        assert.equal(Normalize('Hello Шѻrld_!1߁🤗', options), 'Hello-Шѻrld_1߁🤗')
     })
 
     it('Normalize: alphabetic mode, remove numbers', () => {
@@ -173,6 +178,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '')
         assert.equal(Normalize('😁', options), '')
         assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello-Шѻrld_')
+        assert.equal(Normalize('Hello Шѻrld_!1߁🤗', options), 'Hello-Шѻrld_')
     })
 
     it('Normalize: alphabetic mode, remove numbers, keep emojis', () => {
@@ -201,6 +207,7 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('\uD83D\uDE01', options), '😁')
         assert.equal(Normalize('😁', options), '😁')
         assert.equal(Normalize('Hello Шѻrld_!1߁', options), 'Hello-Шѻrld_1') // 1 remain because it's a valid emoji
+        assert.equal(Normalize('Hello Шѻrld_!1߁🤗', options), 'Hello-Шѻrld_1🤗')
     })
 
     it('Normalize: latin mode', () => {
