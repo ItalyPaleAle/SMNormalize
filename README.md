@@ -3,7 +3,7 @@
 [![Dependency Status](https://david-dm.org/ItalyPaleAle/SMNormalize.svg?style=flat)](https://david-dm.org/ItalyPaleAle/SMNormalize)
 [![devDependency Status](https://david-dm.org/ItalyPaleAle/SMNormalize/dev-status.svg?style=flat)](https://david-dm.org/ItalyPaleAle/SMNormalize#info=devDependencies)
 
-String normalization utilities for Unicode strings.
+String normalization utilities for Unicode strings and ids.
 
 In a world where everyone types in Unicode (including emojis!), there are many things to consider when you accept input from users and are, for example, planning to use input strings as identifiers. For example, when dealing with tags, ids, labels, titles… When dealing with these situations, there a few common issues:
 
@@ -56,7 +56,7 @@ The `options` argument is an object with the following properties:
 - **`options.preserveCharacters`** (string, default: `-_.`) optional list of individual characters that should not be removed, regardless of modes of operation. By default, this includes the dash `-`, the underscore `_` and the dot `.`. You can disable this by setting this to an empty string.
 - **`options.lowercase`** (boolean, default: `false`) optionally lowercases the string before returning it.
 
-To show the difference between multiple modes of operation and options, consider this string as example: `Hello Шѻrld_!1߁🤗`
+To show the difference between multiple modes of operation and options, consider this string as example: <br> `Hello Шѻrld_!1߁🤗`
 
 |  | "basic" mode | "alphabetic" mode | "latin" mode |
 |-------------------------------------------|------------------|-------------------|--------------|
