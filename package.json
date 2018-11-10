@@ -1,0 +1,56 @@
+{
+  "name": "smnormalize",
+  "version": "1.0.0",
+  "description": "String normalization utilities for Unicode strings",
+  "main": "dist/SMNormalize.js",
+  "types": "dist/SMNormalize.d.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "compile": "npm run tsc",
+    "docs": "npm run typedoc",
+    "tsc": "./node_modules/.bin/tsc",
+    "test": "TZ=Etc/UTC ./node_modules/.bin/ts-node node_modules/istanbul/lib/cli.js cover -e .ts  -x \"*.d.ts\" -x \"*.test.ts\" ./node_modules/.bin/_mocha --report html -- -R test test/**/*.test.ts",
+    "test-nocov": "TZ=Etc/UTC ./node_modules/.bin/_mocha -r ts-node/register test/**/*.test.ts",
+    "lint": "npm run tslint",
+    "tslint": "./node_modules/.bin/tslint -p tsconfig.json",
+    "typedoc": "./node_modules/.bin/typedoc --name SMNormalize --out docs/ --readme README.md --target ES6 --module commonjs --mode modules src && touch docs/.nojekyll",
+    "prepublishOnly": "npm run tslint && npm run compile && npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItalyPaleAle/SMNormalize.git"
+  },
+  "keywords": [
+    "unicode",
+    "transliterator",
+    "diacritics",
+    "normalize",
+    "emoji",
+    "identifier",
+    "cleanup",
+    "string"
+  ],
+  "author": "Alessandro Segala",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ItalyPaleAle/SMNormalize/issues"
+  },
+  "homepage": "https://github.com/ItalyPaleAle/SMNormalize",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.3",
+    "coveralls": "^3.0.2",
+    "istanbul": "v1.1.0-alpha.1",
+    "mocha": "^5.2.0",
+    "regenerate": "^1.4.0",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typedoc": "^0.13.0",
+    "typescript": "^3.1.0",
+    "unicode-11.0.0": "^0.7.8",
+    "unicode-tr51": "^9.0.1"
+  }
+}
