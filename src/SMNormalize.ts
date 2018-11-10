@@ -8,24 +8,35 @@ export interface NormalizeOptions {
      * - "alphabetic" removes all characters that are not alphabetic (in all scripts)
      * - "latin" removes all characters that are not in the latin alphabet
      * 
-     * In all modes, all whitespaces are converted to normal space characters.
+     * In all modes, control characters and whitespaces are removed; spaces are converted to the character specified in `spaceConversion`
      * 
      * Default value: `basic`
      */
     mode?: 'basic' | 'alphabetic' | 'latin'
 
     /**
+     * Defines the character spaces (codepoint 0x20) are converted to. By default, this is `-` (dash). To preserve spaces as is, set this to ` `. Set to an empty string or null to remove all spaces entirely.
+     * Note that all other spacing characters (including newlines, tabs, etc) are removed.
+     */
+    convertSpaces?: string | null
+
+    /**
      * Additional characters to preserve. By default, this is `-_.` (dash, underscore and dot). This is ignored when in `basic` mode.
      */
     preserveCharacters?: string
 
-    /** Remove numbers. Default value: `false`. This has no effect in `basic` mode, as that never removes numbers. */
+    /**
+     * Remove numbers. Default value: `false`. This has no effect in `basic` mode, as that never removes numbers. */
     removeNumbers?: boolean
 
-    /** Keep emoji characters. Default value: `false`. This has no effect in `basic` mode, as that doesn't remove characters.. */
+    /**
+     * Keep emoji characters. Default value: `false`. This has no effect in `basic` mode, as that doesn't remove characters..
+     */
     keepEmojis?: boolean
 
-    /** Lowercase the output string. Default value: `false` */
+    /**
+     * Lowercase the output string. Default value: `false`
+     */
     lowercase?: boolean
 }
 
@@ -47,6 +58,12 @@ export function Normalize(str: string, options?: NormalizeOptions): string {
     if (options.preserveCharacters === undefined) {
         options.preserveCharacters = '-_.'
     }
+    if (options.convertSpaces === undefined) {
+        options.convertSpaces = '-'
+    }
+    else if (options.convertSpaces === null) {
+        options.convertSpaces = ''
+    }
 
     // 1. Decompose Unicode sequences
     str = str.normalize('NFD')
@@ -54,52 +71,43 @@ export function Normalize(str: string, options?: NormalizeOptions): string {
     // 2. Normalize the string based on the chosen method
     let key
 
-    // Replacer function that preserves some characters, if any
+    // Replacer function that converts spaces to the "convertSpace" character, and preserves those characters in the "preserveCharacter" list
     const replacer = (str: string): string =>
-        options.preserveCharacters.indexOf(str) < 0 ? '' : str
+        str === ' ' ?
+            options.convertSpaces :
+            options.preserveCharacters.indexOf(str) < 0 ? '' : str
+    
     switch (options.mode) {
         case 'basic':
-            // Remove all sequences that are in the "Mark" category
-            str = str.replace(regex.basic, '')
+            // Remove all sequences that are in the "mark" category
+            str = str.replace(regex.basic, replacer)
             break
 
         case 'alphabetic':
-            // Remove all characters that are not Alphabetic or Spacing
+            // Remove all characters that are not alphabetic
             key = 'alphabetic' +
                 (!options.removeNumbers ? '+numbers' : '') +
                 (options.keepEmojis ? '+emoji' : '')
-                if (options.preserveCharacters) {
-                    str = str.replace(regex[key], replacer)
-                }
-                else {
-                    str = str.replace(regex[key], '')
-                }
+            str = str.replace(regex[key], replacer)
             break
 
         case 'latin':
-            // Remove all characters that are not Alphabetic or Spacing
+            // Remove all characters that are not in the latin alphabet
+            // When emojis are enabled, 0-9 numbers are always included
             key = 'latin' +
-                (!options.removeNumbers ? '+numbers' : '') +
+                ((!options.removeNumbers && !options.keepEmojis) ? '+numbers' : '') +
                 (options.keepEmojis ? '+emoji' : '')
-                if (options.preserveCharacters) {
-                    str = str.replace(regex[key], replacer)
-                }
-                else {
-                    str = str.replace(regex[key], '')
-                }
+            str = str.replace(regex[key], replacer)
             break
 
         default:
             throw Error('Invalid mode')
     }
 
-    // 3. Replace all spacing characters with normal spaces
-    str = str.replace(regex.spacing, ' ')
-
-    // 4. Compose the Unicode sequences again
+    // 3. Compose the Unicode sequences again
     str = str.normalize('NFC')
 
-    // 5. Optionally lowercase the string
+    // 4. Optionally lowercase the string
     if (options.lowercase) {
         str = str.toLowerCase()
     }
