@@ -50,11 +50,7 @@
     "istanbul": "v1.1.0-alpha.1",
     "mocha": "^5.2.0",
     "regenerate": "^1.4.0",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "typedoc": "^0.13.0",
-    "typescript": "^3.1.6",
-    "unicode-11.0.0": "^0.7.8",
-    "unicode-tr51": "^9.0.1"
+    "unicode-12.0.0": "^0.7.9",
+    "unicode-tr51": "^9.1.0"
   }
 }

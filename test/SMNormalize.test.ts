@@ -22,6 +22,9 @@ describe('SMNormalize', () => {
         assert.equal(Normalize('😁'), '😁')
         assert.equal(Normalize('Hello Шѻrld_!1߁'), 'Hello-Шѻrld_!1߁')
         assert.equal(Normalize('Hello Шѻrld_!1߁🤗'), 'Hello-Шѻrld_!1߁🤗')
+
+        // Unicode 12 new emojis
+        assert.equal(Normalize(String.fromCodePoint(0x1F9A5)), '🦥')
     })
 
     it('Normalize: basic mode', () => {

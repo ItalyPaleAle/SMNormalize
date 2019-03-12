@@ -12,7 +12,7 @@ In a world where everyone types in Unicode (including emojis!), there are many t
 - Remove non-letter characters: SMNormalize allows you to remove all characters that are not letters or numbers, in any alphabet used around the world – or just in the latin one
 - Keep emojis: you can optionally keep emojis, because who doesn't love emojis as identifiers? 🙃
 
-Data used by this module is based on **Unicode 11.0.0**, released in June 2018.
+Data used by this module is based on **Unicode 12.0.0**, released in March 2019.
 
 This module is written in TypeScript and transpiled to JavaScript. All typings are available alongside the code.
 
