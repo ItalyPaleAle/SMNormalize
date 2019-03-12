@@ -65,9 +65,11 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<h1 id="smnormalize">SMNormalize</h1>
-				<p><a href="https://david-dm.org/ItalyPaleAle/SMNormalize"><img src="https://david-dm.org/ItalyPaleAle/SMNormalize.svg?style=flat" alt="Dependency Status"></a>
+				<p><a href="https://npmjs.org/package/smnormalize"><img src="https://img.shields.io/npm/v/smnormalize.svg" alt="Version"></a>
+					<a href="https://npmjs.org/package/smnormalize"><img src="https://img.shields.io/npm/dw/smnormalize.svg" alt="Downloads/week"></a>
+					<a href="https://github.com/ItalyPaleAle/SMNormalize/blob/master/package.json"><img src="https://img.shields.io/npm/l/smnormalize.svg" alt="License"></a>
 				<a href="https://david-dm.org/ItalyPaleAle/SMNormalize#info=devDependencies"><img src="https://david-dm.org/ItalyPaleAle/SMNormalize/dev-status.svg?style=flat" alt="devDependency Status"></a></p>
-				<p>String normalization utilities for Unicode strings.</p>
+				<p>String normalization utilities for Unicode strings and ids.</p>
 				<p>In a world where everyone types in Unicode (including emojis!), there are many things to consider when you accept input from users and are, for example, planning to use input strings as identifiers. For example, when dealing with tags, ids, labels, titles… When dealing with these situations, there a few common issues:</p>
 				<ul>
 					<li>Form: the characters <code>è</code> and <code>è</code> might look identical, but they are in two separate byte sequences, and need to be normalized or string comparisons will fail (see <a href="https://en.wikipedia.org/wiki/Unicode_equivalence">Unicode equivalence</a>)</li>
@@ -75,7 +77,7 @@
 					<li>Remove non-letter characters: SMNormalize allows you to remove all characters that are not letters or numbers, in any alphabet used around the world – or just in the latin one</li>
 					<li>Keep emojis: you can optionally keep emojis, because who doesn&#39;t love emojis as identifiers? 🙃</li>
 				</ul>
-				<p>Data used by this module is based on <strong>Unicode 11.0.0</strong>, released in June 2018.</p>
+				<p>Data used by this module is based on <strong>Unicode 12.0.0</strong>, released in March 2019.</p>
 				<p>This module is written in TypeScript and transpiled to JavaScript. All typings are available alongside the code.</p>
 				<p>This code is licensed under the terms of the MIT license (see LICENSE.md).</p>
 				<h2 id="full-documentation">Full documentation</h2>
@@ -104,7 +106,7 @@ Normalize(str, options)</code></pre>
 					<li><strong><code>options.preserveCharacters</code></strong> (string, default: <code>-_.</code>) optional list of individual characters that should not be removed, regardless of modes of operation. By default, this includes the dash <code>-</code>, the underscore <code>_</code> and the dot <code>.</code>. You can disable this by setting this to an empty string.</li>
 					<li><strong><code>options.lowercase</code></strong> (boolean, default: <code>false</code>) optionally lowercases the string before returning it.</li>
 				</ul>
-				<p>To show the difference between multiple modes of operation and options, consider this string as example: <code>Hello Шѻrld_!1߁🤗</code></p>
+				<p>To show the difference between multiple modes of operation and options, consider this string as example: <br> <code>Hello Шѻrld_!1߁🤗</code></p>
 				<p>|  | &quot;basic&quot; mode | &quot;alphabetic&quot; mode | &quot;latin&quot; mode |
 					|-------------------------------------------|------------------|-------------------|--------------|
 					| removeNumbers = false, keepEmojis = false | <code>Hello-Шѻrld_!1߁🤗</code> | <code>Hello-Шѻrld_1߁</code> | <code>Hello-rld_1</code> |

@@ -1,6 +1,8 @@
 # SMNormalize
 
-[![Dependency Status](https://david-dm.org/ItalyPaleAle/SMNormalize.svg?style=flat)](https://david-dm.org/ItalyPaleAle/SMNormalize)
+[![Version](https://img.shields.io/npm/v/smnormalize.svg)](https://npmjs.org/package/smnormalize)
+[![Downloads/week](https://img.shields.io/npm/dw/smnormalize.svg)](https://npmjs.org/package/smnormalize)
+[![License](https://img.shields.io/npm/l/smnormalize.svg)](https://github.com/ItalyPaleAle/SMNormalize/blob/master/package.json)
 [![devDependency Status](https://david-dm.org/ItalyPaleAle/SMNormalize/dev-status.svg?style=flat)](https://david-dm.org/ItalyPaleAle/SMNormalize#info=devDependencies)
 
 String normalization utilities for Unicode strings and ids.
