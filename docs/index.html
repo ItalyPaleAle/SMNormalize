@@ -68,6 +68,7 @@
 				<p><a href="https://npmjs.org/package/smnormalize"><img src="https://img.shields.io/npm/v/smnormalize.svg" alt="Version"></a>
 					<a href="https://npmjs.org/package/smnormalize"><img src="https://img.shields.io/npm/dw/smnormalize.svg" alt="Downloads/week"></a>
 					<a href="https://github.com/ItalyPaleAle/SMNormalize/blob/master/package.json"><img src="https://img.shields.io/npm/l/smnormalize.svg" alt="License"></a>
+					<a href="https://dev.azure.com/italypaleale/italypaleale/_build/latest?definitionId=15&amp;branchName=master"><img src="https://dev.azure.com/italypaleale/italypaleale/_apis/build/status/ItalyPaleAle.SMNormalize?branchName=master" alt="Build Status"></a>
 				<a href="https://david-dm.org/ItalyPaleAle/SMNormalize#info=devDependencies"><img src="https://david-dm.org/ItalyPaleAle/SMNormalize/dev-status.svg?style=flat" alt="devDependency Status"></a></p>
 				<p>String normalization utilities for Unicode strings and ids.</p>
 				<p>In a world where everyone types in Unicode (including emojis!), there are many things to consider when you accept input from users and are, for example, planning to use input strings as identifiers. For example, when dealing with tags, ids, labels, titles… When dealing with these situations, there a few common issues:</p>
@@ -91,7 +92,13 @@
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> {Normalize} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'smnormalize'</span>)
 
 Normalize(str, options)</code></pre>
-				<p>The method accepts an input string <code>str</code> and normalizes it by removing all diacritics/accents, and ensuring that the resulting string is normalized in the NFC (canonical composition) form. In addition to that, you can perform other operations depending on the mode of operation.</p>
+				<p>The method accepts an input string <code>str</code> and normalizes it with three steps:</p>
+				<ol>
+					<li>Decomposing the Unicode string using the compatibility form (NFKD)</li>
+					<li>Removing all diacritics/accents</li>
+					<li>Re-composing the string in NFC (canonical composition) form</li>
+				</ol>
+				<p>In addition to that, you can perform other operations depending on the mode of operation.</p>
 				<p>The <code>options</code> argument is an object with the following properties:</p>
 				<ul>
 					<li><strong><code>options.mode</code></strong> is the mode of operation, and could be one of the following:<ul>

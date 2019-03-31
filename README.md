@@ -45,7 +45,13 @@ const {Normalize} = require('smnormalize')
 Normalize(str, options)
 ````
 
-The method accepts an input string `str` and normalizes it by removing all diacritics/accents, and ensuring that the resulting string is normalized in the NFC (canonical composition) form. In addition to that, you can perform other operations depending on the mode of operation.
+The method accepts an input string `str` and normalizes it with three steps:
+
+1. Decomposing the Unicode string using the compatibility form (NFKD)
+2. Removing all diacritics/accents
+3. Re-composing the string in NFC (canonical composition) form
+
+In addition to that, you can perform other operations depending on the mode of operation.
 
 The `options` argument is an object with the following properties:
 
