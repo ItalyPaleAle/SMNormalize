@@ -10,3 +10,7 @@ src
 test-results.xml
 tsconfig.json
 tslint.json
+.DS_Store
+azure-pipelines.yml
+build-unicode-data.js
+smnormalize-*.tgz
