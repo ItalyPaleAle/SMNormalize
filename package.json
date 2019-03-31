@@ -16,7 +16,7 @@
     "docs": "npm run typedoc",
     "tsc": "./node_modules/.bin/tsc",
     "test": "TZ=Etc/UTC ./node_modules/.bin/ts-node ./node_modules/.bin/nyc ./node_modules/.bin/_mocha test/**/*.test.ts",
-    "test-ci": "TZ=Etc/UTC ./node_modules/.bin/ts-node ./node_modules/.bin/nyc --reporter cobertura ./node_modules/.bin/_mocha --reporter mocha-junit-reporter test/**/*.test.ts",
+    "test-ci": "TZ=Etc/UTC ./node_modules/.bin/ts-node ./node_modules/.bin/nyc --reporter cobertura --reporter html ./node_modules/.bin/_mocha --reporter mocha-junit-reporter test/**/*.test.ts",
     "lint": "npm run tslint",
     "tslint": "./node_modules/.bin/tslint -p tsconfig.json",
     "typedoc": "./node_modules/.bin/typedoc --name SMNormalize --out docs/ --readme README.md --target ES6 --module commonjs --mode modules src && touch docs/.nojekyll",
