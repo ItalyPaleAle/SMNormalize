@@ -56,7 +56,7 @@ In addition to that, you can perform other operations depending on the mode of o
 The `options` argument is an object with the following properties:
 
 - **`options.mode`** is the mode of operation, and could be one of the following:
-  - **`'basic'`** (this is the default value): in this mode, all diacritics/accents are removed from the string, and the string is nornalized in the NFC form. Whitespaces, including newlines, tabs, etc, are removed; spaces are converted to the character defined in `options.preserveCharacters`. All control characters (unprintable characters) are removed too.
+  - **`'basic'`** (this is the default value): in this mode, all diacritics/accents are removed from the string, and the string is nornalized in the NFKC form. Whitespaces, including newlines, tabs, etc, are removed; spaces are converted to the character defined in `options.preserveCharacters`. All control characters (unprintable characters) are removed too.
   - **`'alphabetic'`** in addition to what basic mode does, all characters that are not letters (in any script/alphabet) are removed, including symbols, spaces, etc.
   - **`'latin'`** similar to the alphabetic mode, but only allows letters that are part of the latin alphabet.
 - **`options.removeNumbers`** (boolean, default: `false`) when false, numbers are always allowed. In alphabetic mode, every kind of number is preserved, while in latin mode only latin numbers are allowed (0-9). This option has no effect in basic mode.

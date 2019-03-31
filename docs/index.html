@@ -102,7 +102,7 @@ Normalize(str, options)</code></pre>
 				<p>The <code>options</code> argument is an object with the following properties:</p>
 				<ul>
 					<li><strong><code>options.mode</code></strong> is the mode of operation, and could be one of the following:<ul>
-							<li><strong><code>&#39;basic&#39;</code></strong> (this is the default value): in this mode, all diacritics/accents are removed from the string, and the string is nornalized in the NFC form. Whitespaces, including newlines, tabs, etc, are removed; spaces are converted to the character defined in <code>options.preserveCharacters</code>. All control characters (unprintable characters) are removed too.</li>
+							<li><strong><code>&#39;basic&#39;</code></strong> (this is the default value): in this mode, all diacritics/accents are removed from the string, and the string is nornalized in the NFKC form. Whitespaces, including newlines, tabs, etc, are removed; spaces are converted to the character defined in <code>options.preserveCharacters</code>. All control characters (unprintable characters) are removed too.</li>
 							<li><strong><code>&#39;alphabetic&#39;</code></strong> in addition to what basic mode does, all characters that are not letters (in any script/alphabet) are removed, including symbols, spaces, etc.</li>
 							<li><strong><code>&#39;latin&#39;</code></strong> similar to the alphabetic mode, but only allows letters that are part of the latin alphabet.</li>
 						</ul>
