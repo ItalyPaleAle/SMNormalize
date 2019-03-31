@@ -15,7 +15,7 @@ export interface NormalizeOptions {
     mode?: 'basic' | 'alphabetic' | 'latin'
 
     /**
-     * Defines the character spaces (codepoint 0x20) are converted to. By default, this is `-` (dash). To preserve spaces as is, set this to ` `. Set to an empty string or null to remove all spaces entirely.
+     * Defines what character spaces (codepoints U+0020 and U+00A0 after compatibility normalization) are converted to. By default, this is `-` (dash). To preserve spaces as is, set this to ` ` (note that non-breaking spaces will be converted to normal spaces). Set to an empty string or null to remove all spaces entirely.
      * Note that all other spacing characters (including newlines, tabs, etc) are removed.
      */
     convertSpaces?: string | null
@@ -66,8 +66,8 @@ export function Normalize(str: string, options?: NormalizeOptions): string {
         options.convertSpaces = ''
     }
 
-    // 1. Decompose Unicode sequences
-    str = str.normalize('NFD')
+    // 1. Decompose Unicode sequences, using compatibility decomposition
+    str = str.normalize('NFKD')
 
     // 2. Normalize the string based on the chosen method
     let key
@@ -106,6 +106,7 @@ export function Normalize(str: string, options?: NormalizeOptions): string {
     }
 
     // 3. Compose the Unicode sequences again
+    // Using canonical form only as we've run the compatibility decomposition before, so we can make it a bit faster
     str = str.normalize('NFC')
 
     // 4. Optionally lowercase the string
