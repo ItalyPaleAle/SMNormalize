@@ -1,10 +1,12 @@
 .travis.yml
 .eslintignore
 .eslintrc.yml
+.nyc_output
 .vscode
 docs
 test
 coverage
 src
+test-results.xml
 tsconfig.json
 tslint.json

@@ -29,5 +29,17 @@ steps:
   displayName: 'Install NPM modules'
 
 - script: |
-    npm test
+    npm run test-ci
   displayName: 'Run tests'
+
+- task: PublishTestResults@2
+  condition: succeededOrFailed()
+  inputs:
+    testRunner: JUnit
+    testResultsFiles: '$(System.DefaultWorkingDirectory)/test-results.xml'
+
+- task: PublishCodeCoverageResults@1
+  inputs: 
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory/coverage/coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
