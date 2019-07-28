@@ -6,16 +6,16 @@
 [![Build Status](https://dev.azure.com/italypaleale/italypaleale/_apis/build/status/ItalyPaleAle.SMNormalize?branchName=master)](https://dev.azure.com/italypaleale/italypaleale/_build/latest?definitionId=15&branchName=master)
 [![devDependency Status](https://david-dm.org/ItalyPaleAle/SMNormalize/dev-status.svg?style=flat)](https://david-dm.org/ItalyPaleAle/SMNormalize#info=devDependencies)
 
-String normalization utilities for Unicode strings and ids.
+String normalization utilities for Unicode strings and IDs.
 
-In a world where everyone types in Unicode (including emojis!), there are many things to consider when you accept input from users and are, for example, planning to use input strings as identifiers. For example, when dealing with tags, ids, labels, titles… When dealing with these situations, there a few common issues:
+In a world where everyone types in Unicode (including emojis!), there are many things to consider when you accept input from users and are planning to use those strings as identifiers, among other things. For example, when dealing with tags, ids, labels, titles… When developers are facing with these situations, there a few common issues:
 
-- Form: the characters `è` and `è` might look identical, but they are in two separate byte sequences, and need to be normalized or string comparisons will fail (see [Unicode equivalence](https://en.wikipedia.org/wiki/Unicode_equivalence))
+- Form: while the characters `è` and `è` might look identical, they might in fact be in two separate byte sequences, and need to be normalized or string comparisons will fail ([learn more](https://withblue.ink/2019/03/11/why-you-need-to-normalize-unicode-strings.html))
 - Diacritics (accents): sometimes you'll want to remove accents and other diacritics from characters, for example turning `über` into `uber`, and `papà` into `papa`
 - Remove non-letter characters: SMNormalize allows you to remove all characters that are not letters or numbers, in any alphabet used around the world – or just in the latin one
 - Keep emojis: you can optionally keep emojis, because who doesn't love emojis as identifiers? 🙃
 
-Data used by this module is based on **Unicode 12.0.0**, released in March 2019.
+Data used by this module is based on **Unicode 12.1.0**, released in May 2019.
 
 This module is written in TypeScript and transpiled to JavaScript. All typings are available alongside the code.
 
@@ -30,7 +30,7 @@ Full documentation is available on [GitHub pages](https://italypaleale.github.io
 Install from NPM:
 
 ````sh
-npm install --save smnormalize
+npm install smnormalize
 ````
 
 ## API Guide
@@ -74,4 +74,4 @@ To show the difference between multiple modes of operation and options, consider
 | removeNumbers = false, keepEmojis = true | `Hello-Шѻrld_!1߁🤗` | `Hello-Шѻrld_1߁🤗` | `Hello-rld_1🤗` |
 | removeNumbers = true, keepEmojis = true | `Hello-Шѻrld_!1߁🤗` | `Hello-Шѻrld_1🤗` | `Hello-rld_1🤗` |
 
-Note that in basic mode the `removeNumbers` and `keepEmojis` options have no effect, because no characters (aside from whitespaces and control characters) are removed. In alphabetic and latin mode, latin numbers are always present when emojis are allowed (but not numbers in other scripts); also, note that the exclamation mark was removed, but the underscore was kept ebcause it's in the `preserveCharacters` list.
+Note that in basic mode the `removeNumbers` and `keepEmojis` options have no effect, because no characters (aside from whitespaces and control characters) are removed. In alphabetic and latin mode, latin numbers are always present when emojis are allowed (but not numbers in other scripts); also, note that the exclamation mark was removed, but the underscore was kept because it's in the default `preserveCharacters` list.
