@@ -1,6 +1,6 @@
 {
   "name": "smnormalize",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "String normalization utilities for Unicode strings",
   "main": "dist/SMNormalize.js",
   "types": "dist/SMNormalize.d.ts",
