@@ -1,7 +1,10 @@
-### TypeScript ###
+# Ignore the package-lock file because this module is published on NPM
+package-lock.json
+
+# TypeScript
 dist
 
-### XML test results ###
+# XML test results
 test-results.xml
 
 

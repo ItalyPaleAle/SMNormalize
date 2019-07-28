@@ -4,7 +4,7 @@ const regenerate = require('regenerate')
 const fs = require('fs')
 
 // Require the modules with the data we need
-const unicodePackageVersion = '12.0.0'
+const unicodePackageVersion = '12.1.0'
 const sets = {
     // Marks (incl. diacritics)
     marks: require('unicode-' + unicodePackageVersion + '/General_Category/Mark/code-points.js'),
@@ -24,8 +24,8 @@ const sets = {
     // Control characters
     control: require('unicode-' + unicodePackageVersion + '/General_Category/Control/code-points.js'),
 
-    // Emoji (from the unicode-tr51 package)
-    emoji: require('unicode-tr51/Emoji.js')
+    // Emoji
+    emoji: require('unicode-' + unicodePackageVersion + '/Binary_Property/Emoji/code-points.js')
 }
 
 // Negates the class in the regular expression
