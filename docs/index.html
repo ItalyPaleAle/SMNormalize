@@ -64,7 +64,9 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h1 id="smnormalize">SMNormalize</h1>
+				<a href="#smnormalize" id="smnormalize" style="color: inherit; text-decoration: none;">
+					<h1>SMNormalize</h1>
+				</a>
 				<p><a href="https://npmjs.org/package/smnormalize"><img src="https://img.shields.io/npm/v/smnormalize.svg" alt="Version"></a>
 					<a href="https://npmjs.org/package/smnormalize"><img src="https://img.shields.io/npm/dw/smnormalize.svg" alt="Downloads/week"></a>
 					<a href="https://github.com/ItalyPaleAle/SMNormalize/blob/master/package.json"><img src="https://img.shields.io/npm/l/smnormalize.svg" alt="License"></a>
@@ -81,14 +83,22 @@
 				<p>Data used by this module is based on <strong>Unicode 12.0.0</strong>, released in March 2019.</p>
 				<p>This module is written in TypeScript and transpiled to JavaScript. All typings are available alongside the code.</p>
 				<p>This code is licensed under the terms of the MIT license (see LICENSE.md).</p>
-				<h2 id="full-documentation">Full documentation</h2>
+				<a href="#full-documentation" id="full-documentation" style="color: inherit; text-decoration: none;">
+					<h2>Full documentation</h2>
+				</a>
 				<p>Full documentation is available on <a href="https://italypaleale.github.io/SMNormalize/">GitHub pages</a>.</p>
-				<h2 id="add-to-your-project">Add to your project</h2>
+				<a href="#add-to-your-project" id="add-to-your-project" style="color: inherit; text-decoration: none;">
+					<h2>Add to your project</h2>
+				</a>
 				<p>Install from NPM:</p>
 				<pre><code class="language-sh">npm install --save smnormalize</code></pre>
-				<h2 id="api-guide">API Guide</h2>
+				<a href="#api-guide" id="api-guide" style="color: inherit; text-decoration: none;">
+					<h2>API Guide</h2>
+				</a>
 				<p>The module exports symbols as named exports.</p>
-				<h3 id="normalize-str-options-">Normalize(str, options)</h3>
+				<a href="#normalizestr-options" id="normalizestr-options" style="color: inherit; text-decoration: none;">
+					<h3>Normalize(str, options)</h3>
+				</a>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> {Normalize} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'smnormalize'</span>)
 
 Normalize(str, options)</code></pre>
@@ -114,12 +124,40 @@ Normalize(str, options)</code></pre>
 					<li><strong><code>options.lowercase</code></strong> (boolean, default: <code>false</code>) optionally lowercases the string before returning it.</li>
 				</ul>
 				<p>To show the difference between multiple modes of operation and options, consider this string as example: <br> <code>Hello Шѻrld_!1߁🤗</code></p>
-				<p>|  | &quot;basic&quot; mode | &quot;alphabetic&quot; mode | &quot;latin&quot; mode |
-					|-------------------------------------------|------------------|-------------------|--------------|
-					| removeNumbers = false, keepEmojis = false | <code>Hello-Шѻrld_!1߁🤗</code> | <code>Hello-Шѻrld_1߁</code> | <code>Hello-rld_1</code> |
-					| removeNumbers = true, keepEmojis = false | <code>Hello-Шѻrld_!1߁🤗</code> | <code>Hello-Шѻrld_</code> | <code>Hello-rld_</code> |
-					| removeNumbers = false, keepEmojis = true | <code>Hello-Шѻrld_!1߁🤗</code> | <code>Hello-Шѻrld_1߁🤗</code> | <code>Hello-rld_1🤗</code> |
-				| removeNumbers = true, keepEmojis = true | <code>Hello-Шѻrld_!1߁🤗</code> | <code>Hello-Шѻrld_1🤗</code> | <code>Hello-rld_1🤗</code> |</p>
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th>&quot;basic&quot; mode</th>
+							<th>&quot;alphabetic&quot; mode</th>
+							<th>&quot;latin&quot; mode</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>removeNumbers = false, keepEmojis = false</td>
+							<td><code>Hello-Шѻrld_!1߁🤗</code></td>
+							<td><code>Hello-Шѻrld_1߁</code></td>
+							<td><code>Hello-rld_1</code></td>
+						</tr>
+						<tr>
+							<td>removeNumbers = true, keepEmojis = false</td>
+							<td><code>Hello-Шѻrld_!1߁🤗</code></td>
+							<td><code>Hello-Шѻrld_</code></td>
+							<td><code>Hello-rld_</code></td>
+						</tr>
+						<tr>
+							<td>removeNumbers = false, keepEmojis = true</td>
+							<td><code>Hello-Шѻrld_!1߁🤗</code></td>
+							<td><code>Hello-Шѻrld_1߁🤗</code></td>
+							<td><code>Hello-rld_1🤗</code></td>
+						</tr>
+						<tr>
+							<td>removeNumbers = true, keepEmojis = true</td>
+							<td><code>Hello-Шѻrld_!1߁🤗</code></td>
+							<td><code>Hello-Шѻrld_1🤗</code></td>
+							<td><code>Hello-rld_1🤗</code></td>
+						</tr>
+				</tbody></table>
 				<p>Note that in basic mode the <code>removeNumbers</code> and <code>keepEmojis</code> options have no effect, because no characters (aside from whitespaces and control characters) are removed. In alphabetic and latin mode, latin numbers are always present when emojis are allowed (but not numbers in other scripts); also, note that the exclamation mark was removed, but the underscore was kept ebcause it&#39;s in the <code>preserveCharacters</code> list.</p>
 			</div>
 		</div>
@@ -156,6 +194,7 @@ Normalize(str, options)</code></pre>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -204,7 +243,7 @@ Normalize(str, options)</code></pre>
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>
